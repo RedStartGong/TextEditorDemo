@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TextEditorDemo</string>
+    <string name="action_refresh">清空</string>
+</resources>
