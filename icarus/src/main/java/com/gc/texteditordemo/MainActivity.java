@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.gc.texteditordemo.dialog.MyImagePopoverIml;
 import com.github.mr5.icarus.Icarus;
 import com.github.mr5.icarus.TextViewToolbar;
 import com.github.mr5.icarus.Toolbar;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.editor);
         textViewToolbar = new TextViewToolbar();
         options = new Options();
+        options.setDefaultImage("file:///android_asset/images/eefung.png");
         options.setPlaceholder("请输入内容...");
         icarus = new Icarus(textViewToolbar,options,webView);
         prepareToolbar(textViewToolbar, icarus);
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         imageButtonTextView.setTypeface(iconFont);
         TextViewButton imageButton = new TextViewButton(imageButtonTextView,icarus);
         imageButton.setName(Button.NAME_IMAGE);
-        imageButton.setPopover(new ImagePopoverImpl(imageButtonTextView,icarus));
+        imageButton.setPopover(new MyImagePopoverIml(imageButtonTextView, icarus));
         textViewToolbar.addButton(imageButton);
         //添加HTML
         TextView htmlButtonTextView = (TextView) findViewById(R.id.button_html5);
