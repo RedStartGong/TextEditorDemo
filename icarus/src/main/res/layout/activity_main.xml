@@ -32,12 +32,12 @@
             <TextView
                     android:id="@+id/button_link"
                     style="@style/EditorIcon"
-                    android:text="@string/icon_link" />
+                    android:text="@string/icon_new_link" />
 
             <TextView
                     android:id="@+id/button_image"
                     style="@style/EditorIcon"
-                    android:text="@string/icon_image" />
+                    android:text="@string/icon_new_image" />
 
             <TextView
                     android:id="@+id/button_list_ol"

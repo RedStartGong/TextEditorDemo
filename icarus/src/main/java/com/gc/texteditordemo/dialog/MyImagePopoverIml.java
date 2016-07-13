@@ -17,6 +17,7 @@ import com.github.mr5.icarus.popover.Popover;
 import com.google.gson.Gson;
 
 /**
+ * 自定义添加图片的dialog
  * Created by GongCheng on 2016/7/12.
  */
 public class MyImagePopoverIml implements Popover{
@@ -38,6 +39,9 @@ public class MyImagePopoverIml implements Popover{
         initDialog();
     }
 
+    /**
+     * 初始化dialog
+     */
     private void initDialog() {
         imageDialog = new Dialog(context);
         imageDialog.setCanceledOnTouchOutside(false);

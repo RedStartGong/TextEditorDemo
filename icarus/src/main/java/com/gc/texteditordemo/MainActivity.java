@@ -1,8 +1,8 @@
 package com.gc.texteditordemo;
 
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
@@ -17,7 +17,6 @@ import com.github.mr5.icarus.button.TextViewButton;
 import com.github.mr5.icarus.entity.Options;
 import com.github.mr5.icarus.popover.FontScalePopoverImpl;
 import com.github.mr5.icarus.popover.HtmlPopoverImpl;
-import com.github.mr5.icarus.popover.ImagePopoverImpl;
 import com.github.mr5.icarus.popover.LinkPopoverImpl;
 
 import java.util.HashMap;
@@ -61,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private Toolbar prepareToolbar(TextViewToolbar textViewToolbar, Icarus icarus) {
         Typeface iconFont = Typeface.createFromAsset(getAssets(),"Simditor.ttf");
+        //添加新的字体
+        Typeface newIconFont = Typeface.createFromAsset(getAssets(),"iconfont.ttf");
         //初始化普通Button
         HashMap<String,Integer> generalButtons = new HashMap<>();
         generalButtons.put(Button.NAME_BOLD,R.id.button_bold);
@@ -90,14 +91,14 @@ public class MainActivity extends AppCompatActivity {
         }
         //添加链接
         TextView linkButtonTextView = (TextView) findViewById(R.id.button_link);
-        linkButtonTextView.setTypeface(iconFont);
+        linkButtonTextView.setTypeface(newIconFont);
         TextViewButton linkButton = new TextViewButton(linkButtonTextView, icarus);
         linkButton.setName(Button.NAME_LINK);
         linkButton.setPopover(new LinkPopoverImpl(linkButtonTextView, icarus));
         textViewToolbar.addButton(linkButton);
         //添加图片
         TextView imageButtonTextView = (TextView) findViewById(R.id.button_image);
-        imageButtonTextView.setTypeface(iconFont);
+        imageButtonTextView.setTypeface(newIconFont);
         TextViewButton imageButton = new TextViewButton(imageButtonTextView,icarus);
         imageButton.setName(Button.NAME_IMAGE);
         imageButton.setPopover(new MyImagePopoverIml(imageButtonTextView, icarus));
