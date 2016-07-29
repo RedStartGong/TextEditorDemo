@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">TextEditorDemo</string>
-    <string name="action_refresh">清空</string>
-    //新的插入链接图标跟插入图标图标
-    <string name="icon_new_link">&#xe91d;</string>
-    <string name="icon_new_image">&#xe623;</string>
-</resources>
