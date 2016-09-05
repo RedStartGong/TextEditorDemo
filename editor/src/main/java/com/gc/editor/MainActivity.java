@@ -1,22 +1,31 @@
 package com.gc.editor;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
+import com.gc.markdown.editor.EditorType;
+import com.gc.markdown.utils.Check;
+import com.gc.markdown.utils.Toast;
 import com.gc.markdown.widget.TabIconView;
 
 import org.greenrobot.eventbus.EventBus;
-import org.w3c.dom.Text;
+
+import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.tabIconView)
     TabIconView tabIconView;
 
+    private static final int INSERT_IMAGE = 1;
     private EditorFragment editorFragment;
     private PreviewFragment previewFragment;
 
@@ -120,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case 1:
                         //发送Event
+
                         EditText title = (EditText) editorFragment.getActivity().findViewById(R.id.ed_title);
                         EditText content = (EditText) editorFragment.getActivity().findViewById(R.id.content);
                         TextEvent event = new TextEvent(title.getText().toString(),content.getText().toString());
@@ -145,14 +156,133 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.id_shortcut_insert_link://链接
+                insertLink();
                 return;
             case R.id.id_shortcut_insert_photo://图片
+                insertImage();
                 return;
             case R.id.id_shortcut_grid://表格
+                insertTable();
                 return;
-            default:
+            default: //默认
                 String type = editorFragment.getInputType(v);
                 editorFragment.getPerformEditable().perform(type);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == Activity.RESULT_OK && requestCode == INSERT_IMAGE) {
+            Uri uri = data.getData();
+            String[] pojo = {MediaStore.Images.Media.DATA};
+            Cursor cursor = this.managedQuery(uri, pojo, null, null, null);
+            if (cursor != null) {
+//                    ContentResolver cr = this.getContentResolver();
+                int colunm_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                String path = cursor.getString(colunm_index);
+                //以上代码获取图片路径
+                Uri.fromFile(new File(path));//Uri.decode(imageUri.toString())
+                editorFragment.getPerformEditable().perform(EditorType.IMAGE, Uri.fromFile(new File(path)));
+            } else {
+                Toast.showShort(this, "图片处理失败");
+            }
+        }
+
+    }
+
+    private void insertTable() {
+        View rootView = LayoutInflater.from(this).inflate(R.layout.view_common_input_table_view, null);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("插入表格")
+                .setView(rootView)
+                .show();
+
+        TextInputLayout rowNumberHint = (TextInputLayout) rootView.findViewById(R.id.rowNumberHint);
+        TextInputLayout columnNumberHint = (TextInputLayout) rootView.findViewById(R.id.columnNumberHint);
+        EditText rowNumber = (EditText) rootView.findViewById(R.id.rowNumber);
+        EditText columnNumber = (EditText) rootView.findViewById(R.id.columnNumber);
+
+
+        rootView.findViewById(R.id.sure).setOnClickListener(v -> {
+            String rowNumberStr = rowNumber.getText().toString().trim();
+            String columnNumberStr = columnNumber.getText().toString().trim();
+
+            if (Check.isEmpty(rowNumberStr)) {
+                rowNumberHint.setError("不能为空");
+                return;
+            }
+            if (Check.isEmpty(columnNumberStr)) {
+                columnNumberHint.setError("不能为空");
+                return;
+            }
+
+
+            if (rowNumberHint.isErrorEnabled())
+                rowNumberHint.setErrorEnabled(false);
+            if (columnNumberHint.isErrorEnabled())
+                columnNumberHint.setErrorEnabled(false);
+
+            editorFragment.getPerformEditable().perform(EditorType.TABLE, Integer.parseInt(rowNumberStr), Integer.parseInt(columnNumberStr));
+            dialog.dismiss();
+        });
+
+        rootView.findViewById(R.id.cancel).setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    private void insertImage() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_PICK);// Pick an item fromthe
+        intent.setType("image/*");// 从所有图片中进行选择
+        startActivityForResult(intent, INSERT_IMAGE);
+    }
+
+    private void insertLink() {
+        View rootView = LayoutInflater.from(this).inflate(R.layout.view_common_input_link_view, null);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("插入链接")
+                .setView(rootView)
+                .show();
+
+        TextInputLayout titleHint = (TextInputLayout) rootView.findViewById(R.id.inputNameHint);
+        TextInputLayout linkHint = (TextInputLayout) rootView.findViewById(R.id.inputHint);
+        EditText title = (EditText) rootView.findViewById(R.id.name);
+        EditText link = (EditText) rootView.findViewById(R.id.text);
+
+
+        rootView.findViewById(R.id.sure).setOnClickListener(v -> {
+            String titleStr = title.getText().toString().trim();
+            String linkStr = link.getText().toString().trim();
+
+            if (Check.isEmpty(titleStr)) {
+                titleHint.setError("不能为空");
+                return;
+            }
+            if (Check.isEmpty(linkStr)) {
+                linkHint.setError("不能为空");
+                return;
+            }
+
+            if (titleHint.isErrorEnabled())
+                titleHint.setErrorEnabled(false);
+            if (linkHint.isErrorEnabled())
+                linkHint.setErrorEnabled(false);
+
+            editorFragment.getPerformEditable().perform(EditorType.LINK, titleStr, linkStr);
+            dialog.dismiss();
+        });
+
+        rootView.findViewById(R.id.cancel).setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 }

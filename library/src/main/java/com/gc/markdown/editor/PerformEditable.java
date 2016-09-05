@@ -39,61 +39,61 @@ public class PerformEditable  {
             return;
         }
         switch (type) {
-            case EditorType.NAME_CODE:            //代码行
+            case EditorType.CODE:            //代码行
                 performCode();
                 break;
-            case EditorType.NAME_HEADER_1://
+            case EditorType.HEADER_1://
                 H(1);
                 break;
-            case EditorType.NAME_HEADER_2://
+            case EditorType.HEADER_2://
                 H(2);
                 break;
-            case EditorType.NAME_HEADER_3://
+            case EditorType.HEADER_3://
                 H(3);
                 break;
-            case EditorType.NAME_HEADER_4://
+            case EditorType.HEADER_4://
                 H(4);
                 break;
-            case EditorType.NAME_HEADER_5://
+            case EditorType.HEADER_5://
                 H(5);
                 break;
-            case EditorType.NAME_HEADER_6://
+            case EditorType.HEADER_6://
                 H(6);
                 break;
-            case EditorType.NAME_ITALIC://斜体
+            case EditorType.ITALIC://斜体
                 performItalic();
                 break;
-            case EditorType.NAME_BOLD://粗体
+            case EditorType.BOLD://粗体
                 performBold();
                 break;
-            case EditorType.NAME_UNORDERED_LIST://无序列表
+            case EditorType.UNORDERED_LIST://无序列表
                 performList("* ");
                 break;
-            case EditorType.NAME_ORDERED_LIST://数字列表
+            case EditorType.ORDERED_LIST://数字列表
                 performList("1. ");
                 break;
-            case EditorType.NAME_QUOTE://引用
+            case EditorType.QUOTE://引用
                 performQuote();
                 break;
-            case EditorType.NAME_STRIKETHROUGH://字体删除线
+            case EditorType.STRIKETHROUGH://字体删除线
                 performStrikeThrough();
                 break;
-            case EditorType.NAME_TABLE://插入表格
+            case EditorType.TABLE://插入表格
                 performInsertTable(param);
                 break;
-            case EditorType.NAME_LINK://插入链接
+            case EditorType.LINK://插入链接
                 performInsertLink(param);
                 break;
-            case EditorType.NAME_IMAGE://插入图片
+            case EditorType.IMAGE://插入图片
                 performInsertImage(param);
                 break;
-            case EditorType.NAME_IMAGE_LINK:
+            case EditorType.IMAGE_LINK:
                 performInsertImageLink(param);
                 break;
-            case EditorType.NAME_CUTTING_LINE://插入分割线
+            case EditorType.CUTTING_LINE://插入分割线
                 performMinus();
                 break;
-            case EditorType.NAME_XML://xml
+            case EditorType.XML://xml
                 performXML();
                 break;
         }
