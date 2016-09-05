@@ -10,8 +10,6 @@ import android.widget.EditText;
 import com.gc.markdown.editor.EditorType;
 import com.gc.markdown.editor.PerformEditable;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -21,6 +19,7 @@ public class EditorFragment extends Fragment {
     EditText content;
     @Bind(R.id.ed_title)
     EditText title;
+
     private PerformEditable performEditable;
 
     @Override
@@ -40,33 +39,35 @@ public class EditorFragment extends Fragment {
     public String getInputType(View view){
         switch (view.getId()){
             case R.id.id_shortcut_console://代码行
-                return EditorType.NAME_CODE;
+                return EditorType.CODE;
             case R.id.id_shortcut_format_header_1://
-                return EditorType.NAME_HEADER_1;
+                return EditorType.HEADER_1;
             case R.id.id_shortcut_format_header_2://
-                return EditorType.NAME_HEADER_2;
+                return EditorType.HEADER_2;
             case R.id.id_shortcut_format_header_3://
-                return EditorType.NAME_HEADER_3;
+                return EditorType.HEADER_3;
             case R.id.id_shortcut_format_header_4://
-                return EditorType.NAME_HEADER_4;
+                return EditorType.HEADER_4;
             case R.id.id_shortcut_format_header_5://
-                return EditorType.NAME_HEADER_5;
+                return EditorType.HEADER_5;
             case R.id.id_shortcut_format_header_6://
-                return EditorType.NAME_HEADER_6;
+                return EditorType.HEADER_6;
             case R.id.id_shortcut_format_italic://斜体
-                return EditorType.NAME_ITALIC;
+                return EditorType.ITALIC;
             case R.id.id_shortcut_format_bold://粗体
-                return EditorType.NAME_BOLD;
+                return EditorType.BOLD;
+            case R.id.id_shortcut_minus:
+                return EditorType.CUTTING_LINE;//下划线
             case R.id.id_shortcut_list_bulleted://列表
-                return EditorType.NAME_UNORDERED_LIST;
+                return EditorType.UNORDERED_LIST;
             case R.id.id_shortcut_format_numbers://数字列表
-                return EditorType.NAME_ORDERED_LIST;
+                return EditorType.ORDERED_LIST;
             case R.id.id_shortcut_format_quote://引用
-                return EditorType.NAME_QUOTE;
+                return EditorType.QUOTE;
             case R.id.id_shortcut_format_strikethrough://字体删除线
-                return EditorType.NAME_STRIKETHROUGH;
+                return EditorType.STRIKETHROUGH;
             case R.id.id_shortcut_xml:
-                return EditorType.NAME_XML;
+                return EditorType.XML;
             default:
                 return null;
         }
