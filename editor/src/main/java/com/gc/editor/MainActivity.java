@@ -30,7 +30,7 @@ import java.io.File;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.tabLayout)
     TabLayout tabLayout;
     @Bind(R.id.viewPager)
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         return editorFragment;
                     case 1:
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public CharSequence getPageTitle(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         return getString(R.string.editor);
                     case 1:
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onPageSelected(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         tabIconView.setVisibility(View.VISIBLE);
                         break;
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         EditText title = (EditText) editorFragment.getActivity().findViewById(R.id.ed_title);
                         EditText content = (EditText) editorFragment.getActivity().findViewById(R.id.content);
-                        TextEvent event = new TextEvent(title.getText().toString(),content.getText().toString());
+                        TextEvent event = new TextEvent(title.getText().toString(), content.getText().toString());
                         EventBus.getDefault().post(event);
                         tabIconView.setVisibility(View.GONE);
                         break;
@@ -150,11 +150,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * 点击事件分发
+     *
      * @param v
      */
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.id_shortcut_insert_link://链接
                 insertLink();
                 return;
@@ -192,6 +193,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * 插入表格
+     */
     private void insertTable() {
         View rootView = LayoutInflater.from(this).inflate(R.layout.view_common_input_table_view, null);
 
@@ -205,7 +209,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EditText rowNumber = (EditText) rootView.findViewById(R.id.rowNumber);
         EditText columnNumber = (EditText) rootView.findViewById(R.id.columnNumber);
 
-
         rootView.findViewById(R.id.sure).setOnClickListener(v -> {
             String rowNumberStr = rowNumber.getText().toString().trim();
             String columnNumberStr = columnNumber.getText().toString().trim();
@@ -218,7 +221,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 columnNumberHint.setError("不能为空");
                 return;
             }
-
 
             if (rowNumberHint.isErrorEnabled())
                 rowNumberHint.setErrorEnabled(false);
@@ -243,6 +245,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent, INSERT_IMAGE);
     }
 
+    /**
+     * 插入链接
+     */
     private void insertLink() {
         View rootView = LayoutInflater.from(this).inflate(R.layout.view_common_input_link_view, null);
 

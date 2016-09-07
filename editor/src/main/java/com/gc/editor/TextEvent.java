@@ -1,6 +1,7 @@
 package com.gc.editor;
 
 /**
+ * 文本事件
  * Created by GongCheng on 2016/7/29.
  */
 public class TextEvent {

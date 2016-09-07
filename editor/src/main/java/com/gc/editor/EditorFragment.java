@@ -13,7 +13,9 @@ import com.gc.markdown.editor.PerformEditable;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-
+/**
+ * 编辑 Fragment
+ */
 public class EditorFragment extends Fragment {
     @Bind(R.id.content)
     EditText content;

@@ -29,7 +29,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 /**
- * Markdown View
+ * Markdown 格式转换View
  * The type Markdown preview view.
  */
 public class MarkdownPreviewView extends NestedScrollView {
@@ -76,8 +76,8 @@ public class MarkdownPreviewView extends NestedScrollView {
     /**
      * 设置HTML，如果为用户未提供则设置为默认
      */
-    private void loadUrl(){
-        if (mFilePath == null){
+    private void loadUrl() {
+        if (mFilePath == null) {
             mWebView.loadUrl("file:///android_asset/markdown.html");
             return;
         }
@@ -86,9 +86,10 @@ public class MarkdownPreviewView extends NestedScrollView {
 
     /**
      * 用户自定义HTML
+     *
      * @param filePath HTML文件路径
      */
-    public void setHtml(String filePath){
+    public void setHtml(String filePath) {
         this.mFilePath = filePath;
     }
 
@@ -143,7 +144,7 @@ public class MarkdownPreviewView extends NestedScrollView {
         }
 
         public final boolean shouldOverrideUrlLoading(WebView webView, String url) {
-            if (!TextUtils.isEmpty(url)){
+            if (!TextUtils.isEmpty(url)) {
                 //网页跳转
                 //BaseWebActivity.loadUrl(webView.getContext(), url, null);
             }
